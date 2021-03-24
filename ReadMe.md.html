@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Webcalendar - ReadMe.md</title>
+    <style></style>
+</head>
+
+<body id="preview">
+    <h1 class="code-line" data-line-start=0 data-line-end=1><a id="Webcalendar_0"></a>Webcalendar</h1>
+    <hr>
+    <ul>
+        <li class="has-line-data" data-line-start="4" data-line-end="7"><a href="#Introduction_15">Introduction</a>
+            <ul>
+                <li class="has-line-data" data-line-start="5" data-line-end="6">Project structure</li>
+                <li class="has-line-data" data-line-start="6" data-line-end="7">Enhanced Features</li>
+            </ul>
+        </li>
+        <li class="has-line-data" data-line-start="7" data-line-end="10"><a href="#Compatibility_85">Compatibility</a>
+            <ul>
+                <li class="has-line-data" data-line-start="8" data-line-end="9">Operating System</li>
+                <li class="has-line-data" data-line-start="9" data-line-end="10">Browsers</li>
+            </ul>
+        </li>
+        <li class="has-line-data" data-line-start="10" data-line-end="13"><a href="#Old_Issues_109">(Old) Issues</a>
+            <ul>
+                <li class="has-line-data" data-line-start="11" data-line-end="12">Code 0: Client configuration error
+                </li>
+                <li class="has-line-data" data-line-start="12" data-line-end="13">Unable to submit form</li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h2 class="code-line" data-line-start=15 data-line-end=16><a id="Introduction_15"></a>Introduction</h2>
+    <p class="has-line-data" data-line-start="17" data-line-end="18">I built this webcalendar using HTML5, CSS3 and
+        Javascript (ES6). External resources included are <a href="https://getbootstrap.com/">Bootstrap</a> and <a
+            href="https://jquery.com/">jQuery</a>. Icons/SVGs used are <a
+            href="https://icons.getbootstrap.com/">Boostrap Icons</a>. Additionally, as the HTML input type
+        <code>time</code> has really poor browser support, I am using <a
+            href="https://weareoutman.github.io/clockpicker/">Clockpicker</a> for time selection.</p>
+    <p class="has-line-data" data-line-start="19" data-line-end="20">I use the database user <code>6177815</code> (my
+        studentID). It’s the default setting but you can change it on the home page under configuration.</p>
+    <h3 class="code-line" data-line-start=21 data-line-end=22><a id="Project_structure_21"></a>Project structure</h3>
+    <pre><code class="has-line-data" data-line-start="24" data-line-end="67">
+src
+|-- css
+|    |-- vendor
+|    |    |-- boostrap.min.css*
+|    |    |-- bootstrap-clockpicker.min.css*
+|    |-- calendar.css
+|    |-- custom.css
+|    |-- index.css
+|    |-- list.css
+|
+|-- img
+|    |-- favicon.ico*
+|    |-- default
+|    |    |-- 1_placeholder.png*
+|    |    |...*
+|    |    |-- 9_placeholder.png*
+|
+|-- js
+|    |-- compressed
+|    |    |-- calendar.min.js
+|    |    |-- custom.min.js
+|    |    |-- index.min.js
+|    |    |-- list.min.js
+|    |    |-- popup.min.js
+|    |-- vendor
+|    |    |-- boostrap.min.js*
+|    |    |-- jquery-3.5.1.min.js*
+|    |    |-- popperjs.min.js*
+|    |    |-- bootstrap-clockpicker.min.js*
+|    |-- calendar.js
+|    |-- custom.js
+|    |-- index.js
+|    |-- list.js
+|    |-- popup.js
+|
+|-- calendar.html
+|-- index.html
+|-- list.html
+|-- ReadMe.md
+
+Files marked with * are external resources and not created by me.
+</code></pre>
+    <h3 class="code-line" data-line-start=68 data-line-end=69><a id="Enhanced_Features_68"></a>Enhanced Features</h3>
+    <ul>
+        <li class="has-line-data" data-line-start="70" data-line-end="71">Monthly Calendar View, including multi-day
+            events</li>
+        <li class="has-line-data" data-line-start="71" data-line-end="72">Event overview (List view) search-as-you-type
+            function</li>
+        <li class="has-line-data" data-line-start="72" data-line-end="73">Event overview (List view) sorting</li>
+        <li class="has-line-data" data-line-start="73" data-line-end="74">User friendly form validation (including
+            fileupload)<sup>1</sup></li>
+        <li class="has-line-data" data-line-start="74" data-line-end="75">Dynamic and user defined categories</li>
+        <li class="has-line-data" data-line-start="75" data-line-end="76">Dynamic database user</li>
+        <li class="has-line-data" data-line-start="76" data-line-end="77">Ability to download an event as
+            <code>.ics</code> file to save to an calendar application<sup>2</sup></li>
+        <li class="has-line-data" data-line-start="77" data-line-end="78">Status badges to classify events</li>
+        <li class="has-line-data" data-line-start="78" data-line-end="80">Quicklink to Google Maps to easily find an
+            event location</li>
+    </ul>
+    <p class="has-line-data" data-line-start="80" data-line-end="82"><sup>1</sup> <em>client-side
+            only</em><br>
+        <sup>2</sup> <em><a href="https://icalendar.org/validator.html">Valid ics file</a> working for
+            Window 10 Calendar App.</em></p>
+    <hr>
+    <h2 class="code-line" data-line-start=85 data-line-end=86><a id="Compatibility_85"></a>Compatibility</h2>
+    <p class="has-line-data" data-line-start="87" data-line-end="88">The Webcalendar works without any problems using
+        the following configurations. I included a local copy off all external resources, however an internet connection
+        is still needed to access the Calendar API.</p>
+    <h3 class="code-line" data-line-start=89 data-line-end=90><a id="Operating_System_89"></a>Operating System</h3>
+    <ul>
+        <li class="has-line-data" data-line-start="91" data-line-end="93">Windows 10 Pro
+            <code>Version 2004, Build 19041.338</code></li>
+        <li class="has-line-data">Windows 10 Enterprise
+            <code>Version 1809, Build 17763.1339</code></li>
+    </ul>
+    <h3 class="code-line" data-line-start=93 data-line-end=94><a id="Browsers_93"></a>Browsers</h3>
+    <ul>
+        <li class="has-line-data" data-line-start="97" data-line-end="98"><strong>Chrome
+                <code>Version 84</code></strong></li>
+        <li class="has-line-data" data-line-start="98" data-line-end="99"><strong>Firefox
+                <code>Version 79</code></strong></li>
+    </ul>
+    <ul>
+        <li class="has-line-data" data-line-start="102" data-line-end="104">Edge <code>Version 84</code></li>
+    </ul>
+    <blockquote>
+        <p class="has-line-data" data-line-start="104" data-line-end="105">The Event overview (List view) uses <a
+                href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView"><code>element.scrollIntoView(scrollIntoViewOptions)</code></a>
+            and input <code>type=&quot;date&quot;</code> which unfortunately are both <strong><ins>not yet
+                    supported by Safari</ins></strong>. See <a
+                href="https://caniuse.com/#feat=mdn-api_element_scrollintoview_scrollintoviewoptions">scrollIntoView</a>,
+            <a href="https://caniuse.com/#feat=mdn-html_elements_input_input-date">type=“date”</a>.</p>
+    </blockquote>
+    <hr>
+    <h2 class="code-line" data-line-start=109 data-line-end=110><a id="Old_Issues_109"></a>Old Issues</h2>
+    <p class="has-line-data" data-line-start="111" data-line-end="112">Issues that occured during development and their
+        fix.</p>
+    <h3 class="code-line" data-line-start=113 data-line-end=114><a id="Code_0_Client_configuration_error_113"></a>Code
+        0: Client configuration error</h3>
+    <h4 class="code-line" data-line-start=114 data-line-end=115><a
+            id="Failed_to_load_resource_netERR_SSL_PROTOCOL_ERROR_114"></a>Failed to load resource:
+        net::ERR_SSL_PROTOCOL_ERROR</h4>
+    <p class="has-line-data" data-line-start="116" data-line-end="117">This is an client side error and is most likely
+        either caused by an Ad-/Scriptblocker or the security configuration of your browser.</p>
+    <p class="has-line-data" data-line-start="118" data-line-end="119">To solve this issue</p>
+    <ul>
+        <li class="has-line-data" data-line-start="119" data-line-end="120">You can try using another browser. See <a
+                href="#Compatibility">Compatibility</a></li>
+        <li class="has-line-data" data-line-start="120" data-line-end="122">Use a Guest Profile. This allows you to
+            browse with default browser settings without changing your configuration:
+            <ul>
+                <li class="has-line-data" data-line-start="121" data-line-end="122"><a
+                        href="https://support.google.com/chrome/answer/6130773">Enabling the <strong>Chrome</strong>
+                        Guest Profile</a></li>
+            </ul>
+        </li>
+    </ul>
+    <h3 class="code-line" data-line-start=124 data-line-end=125><a id="Unable_to_submit_form_124"></a>Unable to submit
+        form</h3>
+    <h4 class="code-line" data-line-start=125 data-line-end=126><a id="Form_validation_not_working_125"></a>Form
+        validation not working</h4>
+    <p class="has-line-data" data-line-start="127" data-line-end="128">Try “force reloading” the page. This should clear
+        the cache and fix the issue.</p>
+    <p class="has-line-data" data-line-start="129" data-line-end="130">To do this, use the following key combination
+        depending on your Operation System:</p>
+    <ul>
+        <li class="has-line-data" data-line-start="130" data-line-end="131">Windows: <code>ctrl + F5</code></li>
+        <li class="has-line-data" data-line-start="131" data-line-end="132">Mac/Apple: <code>Apple + R</code> or
+            <code>command + R</code></li>
+        <li class="has-line-data" data-line-start="132" data-line-end="133">Linux: <code>F5</code></li>
+    </ul>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+.calendar-day {
+    background-color: unset;
+    color: #50575f;
+    transition: background-color 0.5s ease-out, color 0.5s ease-out, box-shadow 1s ease-out;
+}
+
+.calendar-day:hover {
+    background-color: #6c757d40;
+    color: unset;
+}
+
+.calendar-today {
+    background-color: #6c757d99;
+    color: unset;
+    transition: background-color 0.5s ease-out, color 0.5s ease-out, box-shadow 1s ease-out;
+}
+
+.calendar-today:hover {
+    background-color: #6c757dda;
+}
+
+.calendar-offday {
+    background-color: unset;
+}
+
+#control-currentMonth {
+    width: 180px !important;
+}
+
+.in-calendar-li {
+    border-width: 0px!important;
+    margin: 2px;
+}

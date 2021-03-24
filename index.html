@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Webcalendar - Home</title>
+
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico" sizes="any">
+
+  <!-- Vendor stylesheet -->
+  <link rel="stylesheet" href="css/vendor/bootstrap.min.css" />
+
+  <!-- Custom stylesheet -->
+  <link rel="stylesheet" href="css/custom.css" />
+  <link rel="stylesheet" href="css/index.css" />
+
+  <!-- Vendor javascript -->
+  <script src="js/vendor/jquery-3.5.1.min.js"></script>
+  <script src="js/vendor/popper.min.js"></script>
+  <script src="js/vendor/bootstrap.min.js"></script>
+
+  <!-- Custom javascript -->
+  <script src="js/compressed/custom.min.js"></script>
+  <script src="js/compressed/index.min.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="index.html">
+      <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-calendar-fill" fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+          d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z" />
+        <path d="M2 1a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2H2zm14 4H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5z" />
+      </svg>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="index.html">Home</a>
+        <a class="nav-item nav-link" href="calendar.html">Calendar</a>
+        <a class="nav-item nav-link" href="list.html">Event overview</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Toast notifications START -->
+  <div class="d-flex justify-content-center align-items-center" id="notification-root">
+    <div id="notification-holder">
+      <!-- Dynamically generated and appended here -->
+    </div>
+  </div>
+  <!-- Toast notifications END -->
+
+  <div class="container-fluid">
+    <div class="jumbotron">
+      <h1 class="display-4">Welcome to your Calendar!</h1>
+      <p class="lead">
+        To view, edit or delete events go to <a href="calendar.html"><b>Calendar</b></a> or <a href="list.html"><b>Event
+            overview</b></a>.
+      </p>
+      <hr class="my-4" />
+      <p>
+        On the Home page you can customize your Webcalendar to fit your needs. But don't worry, everything works
+        out-of-the-box.
+      </p>
+    </div>
+
+    <div class="jumbotron pt-3">
+      <h3>Configuration</h3>
+
+      <h5>Database User</h5>
+      <span class="text-muted">All your data is connected to this user. This includes calendar events and categories.
+      </span>
+      <div class="row justify-content-start ml-0 mt-2 mb-2">
+        <input type="text" class="form-control mr-2" id="database-user" disabled value="">
+        <button class="btn btn-outline-primary btn-sm" type="button" id="btn-change-user" data-toggle="modal"
+          data-target="#change-user">
+          <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+            <path fill-rule="evenodd"
+              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+          </svg>
+        </button>
+      </div>
+      <h6>Status: &nbsp;
+        <span class="spinner-grow spinner-grow-sm text-secondary slow-spinner" id="connection-status"></span>
+      </h6>
+
+      <br>
+
+      <h5>Categories <span class="badge badge-pill badge-secondary" id="category-count">0</span></h5>
+      <span class="text-muted">Categories can help organize events. Feel free to create new or delete existing
+        categories.</span>
+      <div class="row">
+        <div class="col">
+          <div class="input-group mb-3 mt-3">
+            <input type="text" class="form-control" id="input-add-category" placeholder="Category name" maxlength="30">
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button" id="btn-add-category" data-toggle="tooltip"
+                data-placement="right" title="Add category">
+                <svg width="1.25em" height="1.25em" viewBox="0 0 16 16" class="bi bi-plus-square-fill"
+                  fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col col-category-list">
+          <!-- Dynamically replaced by categories-->
+          <ul class="list-group" id="category-list-1">
+            <li class="list-group-item d-flex justify-content-between align-items-center"><span
+                class="text-muted">Placeholder</span>
+              <button class="btn btn-outline-danger btn-sm" disabled>Delete</button>
+            </li>
+          </ul>
+        </div>
+        <div class="col col-category-list">
+          <!-- Dynamically replaced by categories-->
+          <ul class="list-group" id="category-list-2">
+            <li class="list-group-item d-flex justify-content-between align-items-center"><span
+                class="text-muted">Placeholder</span>
+              <button class="btn btn-outline-danger btn-sm" disabled>Delete</button>
+            </li>
+          </ul>
+        </div>
+        <div class="col col-category-list">
+          <!-- Dynamically replaced by categories-->
+          <ul class="list-group" id="category-list-0">
+            <li class="list-group-item d-flex justify-content-between align-items-center"><span
+                class="text-muted">Placeholder</span>
+              <button class="btn btn-outline-danger btn-sm" disabled>Delete</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <br>
+
+      <h5>Default image</h5>
+      <span class="text-muted">Here you can set an default image that will be displayed for events without a custom
+        image.</span>
+      <div class="container-fluid">
+        <img src="img/default/1_placeholder.png" alt="Whitespace" class="img-thumbnail img-preview" draggable="false">
+        <img src="img/default/2_placeholder.png" alt="Generic placholder" class="img-thumbnail img-preview"
+          draggable="false">
+        <img src="img/default/3_placeholder.png" alt="Generic placholder 2" class="img-thumbnail img-preview"
+          draggable="false">
+        <img src="img/default/4_placeholder.png" alt="Snowy mountain" class="img-thumbnail img-preview"
+          draggable="false">
+        <img src="img/default/5_placeholder.png" alt="Nightsky" class="img-thumbnail img-preview" draggable="false">
+        <img src="img/default/6_placeholder.png" alt="Coast" class="img-thumbnail img-preview" draggable="false">
+        <img src="img/default/7_placeholder.png" alt="Nature" class="img-thumbnail img-preview" draggable="false">
+        <img src="img/default/8_placeholder.png" alt="Skyscraper" class="img-thumbnail img-preview" draggable="false">
+        <img src="img/default/9_placeholder.png" alt="City skyline" class="img-thumbnail img-preview" draggable="false">
+      </div>
+    </div>
+
+    <div class="jumbotron pt-3">
+      <h3 class="p-3">Additional Information & <samp>ReadMe.md</samp></h3>
+      <!-- HTML render of ReadMe.md-->
+      <h1 class="code-line" data-line-start=0 data-line-end=1><a id="Webcalendar_0"></a>Webcalendar</h1>
+      <hr>
+      <ul>
+        <li class="has-line-data" data-line-start="4" data-line-end="7"><a href="#Introduction_15">Introduction</a>
+          <ul>
+            <li class="has-line-data" data-line-start="5" data-line-end="6">Project structure</li>
+            <li class="has-line-data" data-line-start="6" data-line-end="7">Enhanced Features</li>
+          </ul>
+        </li>
+        <li class="has-line-data" data-line-start="7" data-line-end="10"><a href="#Compatibility_85">Compatibility</a>
+          <ul>
+            <li class="has-line-data" data-line-start="8" data-line-end="9">Operating System</li>
+            <li class="has-line-data" data-line-start="9" data-line-end="10">Browsers</li>
+          </ul>
+        </li>
+        <li class="has-line-data" data-line-start="10" data-line-end="13"><a href="#Old_Issues_109">(Old) Issues</a>
+          <ul>
+            <li class="has-line-data" data-line-start="11" data-line-end="12">Code 0: Client configuration error
+            </li>
+            <li class="has-line-data" data-line-start="12" data-line-end="13">Unable to submit form</li>
+          </ul>
+        </li>
+      </ul>
+      <hr>
+      <h2 class="code-line" data-line-start=15 data-line-end=16><a id="Introduction_15"></a>Introduction</h2>
+      <p class="has-line-data" data-line-start="17" data-line-end="18">I built this webcalendar using HTML5, CSS3 and
+        Javascript (ES6). External resources included are <a href="https://getbootstrap.com/">Bootstrap</a> and <a
+          href="https://jquery.com/">jQuery</a>. Icons/SVGs used are <a href="https://icons.getbootstrap.com/">Boostrap
+          Icons</a>. Additionally, as the HTML input type
+        <code>time</code> has really poor browser support, I am using <a
+          href="https://weareoutman.github.io/clockpicker/">Clockpicker</a> for time selection.</p>
+      <p class="has-line-data" data-line-start="19" data-line-end="20">I use the database user <code>6177815</code> (my
+        studentID). It’s the default setting but you can change it on the home page under configuration.</p>
+      <h3 class="code-line" data-line-start=21 data-line-end=22><a id="Project_structure_21"></a>Project structure</h3>
+      <pre><code class="has-line-data" data-line-start="24" data-line-end="67">
+src
+|-- css
+|    |-- vendor
+|    |    |-- boostrap.min.css*
+|    |    |-- bootstrap-clockpicker.min.css*
+|    |-- calendar.css
+|    |-- custom.css
+|    |-- index.css
+|    |-- list.css
+|
+|-- img
+|    |-- favicon.ico*
+|    |-- default
+|    |    |-- 1_placeholder.png*
+|    |    |...*
+|    |    |-- 9_placeholder.png*
+|
+|-- js
+|    |-- compressed
+|    |    |-- calendar.min.js
+|    |    |-- custom.min.js
+|    |    |-- index.min.js
+|    |    |-- list.min.js
+|    |    |-- popup.min.js
+|    |-- vendor
+|    |    |-- boostrap.min.js*
+|    |    |-- jquery-3.5.1.min.js*
+|    |    |-- popperjs.min.js*
+|    |    |-- bootstrap-clockpicker.min.js*
+|    |-- calendar.js
+|    |-- custom.js
+|    |-- index.js
+|    |-- list.js
+|    |-- popup.js
+|
+|-- calendar.html
+|-- index.html
+|-- list.html
+|-- ReadMe.md
+
+Files marked with * are external resources and not created by me.
+</code></pre>
+      <h3 class="code-line" data-line-start=68 data-line-end=69><a id="Enhanced_Features_68"></a>Enhanced Features</h3>
+      <ul>
+        <li class="has-line-data" data-line-start="70" data-line-end="71">Monthly Calendar View, including multi-day
+          events</li>
+        <li class="has-line-data" data-line-start="71" data-line-end="72">Event overview (List view) search-as-you-type
+          function</li>
+        <li class="has-line-data" data-line-start="72" data-line-end="73">Event overview (List view) sorting</li>
+        <li class="has-line-data" data-line-start="73" data-line-end="74">User friendly form validation (including
+          fileupload)<sup>1</sup></li>
+        <li class="has-line-data" data-line-start="74" data-line-end="75">Dynamic and user defined categories</li>
+        <li class="has-line-data" data-line-start="75" data-line-end="76">Dynamic database user</li>
+        <li class="has-line-data" data-line-start="76" data-line-end="77">Ability to download an event as
+          <code>.ics</code> file to save to an calendar application<sup>2</sup></li>
+        <li class="has-line-data" data-line-start="77" data-line-end="78">Status badges to classify events</li>
+        <li class="has-line-data" data-line-start="78" data-line-end="80">Quicklink to Google Maps to easily find an
+          event location</li>
+      </ul>
+      <p class="has-line-data" data-line-start="80" data-line-end="82"><sup>1</sup> <em>client-side
+          only</em><br>
+        <sup>2</sup> <em><a href="https://icalendar.org/validator.html">Valid ics file</a> working for
+          Window 10 Calendar App.</em></p>
+      <hr>
+      <h2 class="code-line" data-line-start=85 data-line-end=86><a id="Compatibility_85"></a>Compatibility</h2>
+      <p class="has-line-data" data-line-start="87" data-line-end="88">The Webcalendar works without any problems using
+        the following configurations. I included a local copy off all external resources, however an internet connection
+        is still needed to access the Calendar API.</p>
+      <h3 class="code-line" data-line-start=89 data-line-end=90><a id="Operating_System_89"></a>Operating System</h3>
+      <ul>
+        <li class="has-line-data" data-line-start="91" data-line-end="93">Windows 10 Pro
+          <code>Version 2004, Build 19041.338</code></li>
+        <li class="has-line-data">Windows 10 Enterprise
+          <code>Version 1809, Build 17763.1339</code></li>
+      </ul>
+      <h3 class="code-line" data-line-start=93 data-line-end=94><a id="Browsers_93"></a>Browsers</h3>
+      <ul>
+        <li class="has-line-data" data-line-start="97" data-line-end="98"><strong>Chrome
+            <code>Version 84</code></strong></li>
+        <li class="has-line-data" data-line-start="98" data-line-end="99"><strong>Firefox
+            <code>Version 79</code></strong></li>
+      </ul>
+      <ul>
+        <li class="has-line-data" data-line-start="102" data-line-end="104">Edge <code>Version 84</code></li>
+      </ul>
+      <blockquote>
+        <p class="has-line-data" data-line-start="104" data-line-end="105">The Event overview (List view) uses <a
+            href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView"><code>element.scrollIntoView(scrollIntoViewOptions)</code></a>
+          and input <code>type=&quot;date&quot;</code> which unfortunately are both <strong><ins>not yet
+              supported by Safari</ins></strong>. See <a
+            href="https://caniuse.com/#feat=mdn-api_element_scrollintoview_scrollintoviewoptions">scrollIntoView</a>,
+          <a href="https://caniuse.com/#feat=mdn-html_elements_input_input-date">type=“date”</a>.</p>
+      </blockquote>
+      <hr>
+      <h2 class="code-line" data-line-start=109 data-line-end=110><a id="Old_Issues_109"></a>Old Issues</h2>
+      <p class="has-line-data" data-line-start="111" data-line-end="112">Issues that occured during development and
+        their
+        fix.</p>
+      <h3 class="code-line" data-line-start=113 data-line-end=114><a id="Code_0_Client_configuration_error_113"></a>Code
+        0: Client configuration error</h3>
+      <h4 class="code-line" data-line-start=114 data-line-end=115><a
+          id="Failed_to_load_resource_netERR_SSL_PROTOCOL_ERROR_114"></a>Failed to load resource:
+        net::ERR_SSL_PROTOCOL_ERROR</h4>
+      <p class="has-line-data" data-line-start="116" data-line-end="117">This is an client side error and is most likely
+        either caused by an Ad-/Scriptblocker or the security configuration of your browser.</p>
+      <p class="has-line-data" data-line-start="118" data-line-end="119">To solve this issue</p>
+      <ul>
+        <li class="has-line-data" data-line-start="119" data-line-end="120">You can try using another browser. See <a
+            href="#Compatibility">Compatibility</a></li>
+        <li class="has-line-data" data-line-start="120" data-line-end="122">Use a Guest Profile. This allows you to
+          browse with default browser settings without changing your configuration:
+          <ul>
+            <li class="has-line-data" data-line-start="121" data-line-end="122"><a
+                href="https://support.google.com/chrome/answer/6130773">Enabling the <strong>Chrome</strong>
+                Guest Profile</a></li>
+          </ul>
+        </li>
+      </ul>
+      <h3 class="code-line" data-line-start=124 data-line-end=125><a id="Unable_to_submit_form_124"></a>Unable to submit
+        form</h3>
+      <h4 class="code-line" data-line-start=125 data-line-end=126><a id="Form_validation_not_working_125"></a>Form
+        validation not working</h4>
+      <p class="has-line-data" data-line-start="127" data-line-end="128">Try “force reloading” the page. This should
+        clear
+        the cache and fix the issue.</p>
+      <p class="has-line-data" data-line-start="129" data-line-end="130">To do this, use the following key combination
+        depending on your Operation System:</p>
+      <ul>
+        <li class="has-line-data" data-line-start="130" data-line-end="131">Windows: <code>ctrl + F5</code></li>
+        <li class="has-line-data" data-line-start="131" data-line-end="132">Mac/Apple: <code>Apple + R</code> or
+          <code>command + R</code></li>
+        <li class="has-line-data" data-line-start="132" data-line-end="133">Linux: <code>F5</code></li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- User change modal START -->
+  <div class="modal fade" id="change-user" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Change database user</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mx-auto" id="modal-input">
+            <div class="input-group-prepend">
+              <button class="btn btn-outline-secondary" type="button"
+                onclick="$('#modal-database-user').val('6177815'); $('#modal-database-user').trigger('keyup');"
+                data-toggle="tooltip" data-placement="left" title="Reset to default">
+                <svg width="1.25em" height="1.25em" viewBox="0 0 16 16" class="bi bi-bootstrap-reboot"
+                  fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M1.161 8a6.84 6.84 0 1 0 6.842-6.84.58.58 0 0 1 0-1.16 8 8 0 1 1-6.556 3.412l-.663-.577a.58.58 0 0 1 .227-.997l2.52-.69a.58.58 0 0 1 .728.633l-.332 2.592a.58.58 0 0 1-.956.364l-.643-.56A6.812 6.812 0 0 0 1.16 8zm5.48-.079V5.277h1.57c.881 0 1.416.499 1.416 1.32 0 .84-.504 1.324-1.386 1.324h-1.6zm0 3.75V8.843h1.57l1.498 2.828h1.314L9.377 8.665c.897-.3 1.427-1.106 1.427-2.1 0-1.37-.943-2.246-2.456-2.246H5.5v7.352h1.141z" />
+                </svg>
+              </button>
+            </div>
+            <input type="text" class="form-control mx-auto text-center" id="modal-database-user" placeholder=""
+              maxlength="10">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-success" id="confirm-user-change" disabled>
+            Change
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- User change modal END -->
+
+</body>
+
+</html>
